@@ -32,7 +32,8 @@ const reChart = Plot.plot({
   color: {domain: ["Revenue receipts", "Revenue expenditure"], range: [PF.teal, PF.amber]},
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
-    Plot.lineY(reData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5}),
+    Plot.lineY(reData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5,
+      tip: {format: {x: fy, y: (d) => "₹" + inr(d) + " cr", stroke: true}}}),
     Plot.dot(reData, {x: "year", y: "value", fill: "indicator", r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(reData.filter((d) => d.year === 2026), {x: "year", y: "value", text: (d) => inr(d.value), dx: 10, textAnchor: "start", fill: PF.muted, fontSize: 12})
   ]
@@ -46,7 +47,8 @@ const defChart = Plot.plot({
   color: {domain: ["Fiscal deficit", "Revenue deficit"], range: [PF.teal, PF.amber]},
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
-    Plot.lineY(defData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5}),
+    Plot.lineY(defData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5,
+      tip: {format: {x: fy, y: (d) => d + "%", stroke: true}}}),
     Plot.dot(defData, {x: "year", y: "value", fill: "indicator", r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(defData.filter((d) => d.year === 2026), {x: "year", y: "value", text: (d) => d.value + "%", dx: 10, textAnchor: "start", fill: PF.muted, fontSize: 12})
   ]
@@ -60,7 +62,8 @@ const gsdpChart = Plot.plot({
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
     Plot.areaY(gsdp, {x: "year", y: "value", fill: PF.teal, fillOpacity: 0.1}),
-    Plot.lineY(gsdp, {x: "year", y: "value", stroke: PF.teal, strokeWidth: 2.5}),
+    Plot.lineY(gsdp, {x: "year", y: "value", stroke: PF.teal, strokeWidth: 2.5,
+      tip: {format: {x: fy, y: (d) => "₹" + inr(d) + " cr"}}}),
     Plot.dot(gsdp, {x: "year", y: "value", fill: PF.teal, r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(gsdp, {x: "year", y: "value", text: (d) => inr(d.value), dy: -12, fill: PF.muted, fontSize: 12})
   ]
@@ -72,7 +75,8 @@ const sectorChart = Plot.plot({
   x: {label: "₹ crore →", grid: true, tickFormat: "~s", nice: true},
   y: {label: null, padding: 0.4},
   marks: [
-    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3}),
+    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
+      tip: {format: {x: (d) => "₹" + inr(d) + " cr", y: true}}}),
     Plot.text(sectors, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]

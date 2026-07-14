@@ -1,0 +1,4 @@
+indicator,geography,year,value,unit,source_id
+Government,Punjab,2024,19243,schools,udise_plus
+Private unaided,Punjab,2024,7589,schools,udise_plus
+Government-aided,Punjab,2024,437,schools,udise_plus

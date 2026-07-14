@@ -1,0 +1,4 @@
+indicator,geography,year,value,unit,source_id
+Infant mortality rate,Punjab,2020,28,"per 1,000 live births",nfhs5_punjab
+Sex ratio at birth,Punjab,2016,860,"females per 1,000 males",nfhs5_punjab
+Sex ratio at birth,Punjab,2020,904,"females per 1,000 males",nfhs5_punjab

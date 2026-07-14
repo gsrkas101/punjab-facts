@@ -1,0 +1,4 @@
+indicator,geography,year,value,unit,source_id
+Overall,Punjab,2011,75.84,%,census_2011
+Male,Punjab,2011,80.44,%,census_2011
+Female,Punjab,2011,70.73,%,census_2011

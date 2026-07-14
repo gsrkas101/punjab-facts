@@ -24,7 +24,8 @@ const sectorChart = Plot.plot({
   x: {label: "₹ crore →", grid: true, tickFormat: "~s", nice: true},
   y: {label: null, padding: 0.4},
   marks: [
-    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3}),
+    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
+      tip: {format: {x: (d) => "₹" + inr(d) + " cr", y: true}}}),
     Plot.text(sectors, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]

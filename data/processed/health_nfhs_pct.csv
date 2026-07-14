@@ -1,0 +1,9 @@
+indicator,geography,year,value,unit,source_id
+Institutional births,Punjab,2016,91,%,nfhs5_punjab
+Institutional births,Punjab,2020,94,%,nfhs5_punjab
+Children under 5 stunted,Punjab,2016,26,%,nfhs5_punjab
+Children under 5 stunted,Punjab,2020,25,%,nfhs5_punjab
+Children under 5 wasted,Punjab,2016,16,%,nfhs5_punjab
+Children under 5 wasted,Punjab,2020,11,%,nfhs5_punjab
+Children 6-59 months anaemic,Punjab,2016,57,%,nfhs5_punjab
+Children 6-59 months anaemic,Punjab,2020,71,%,nfhs5_punjab

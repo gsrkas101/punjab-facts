@@ -147,3 +147,47 @@ html.js .reveal.d3 { transition-delay: .18s; }
   html.js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .stat-card, .inside-card { transition: none !important; }
 }
+
+/* ---------- Chart card hover + entrance animations ---------- */
+.card { transition: transform .18s ease, box-shadow .18s ease; }
+.card:hover { box-shadow: var(--pf-shadow-lg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Bars grow from the axis. */
+  .card svg[class^="plot-"] g[aria-label="bar"] rect {
+    transform-box: fill-box; transform-origin: left center;
+    animation: pf-grow-x .8s cubic-bezier(.2,.75,.25,1) both;
+  }
+  .card svg g[aria-label="bar"] rect:nth-of-type(1){animation-delay:0s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(2){animation-delay:.04s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(3){animation-delay:.08s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(4){animation-delay:.12s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(5){animation-delay:.16s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(6){animation-delay:.2s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(7){animation-delay:.24s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(8){animation-delay:.28s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(9){animation-delay:.32s}
+  .card svg g[aria-label="bar"] rect:nth-of-type(n+10){animation-delay:.36s}
+
+  /* Lines draw in. */
+  .card svg[class^="plot-"] g[aria-label="line"] path {
+    stroke-dasharray: 1600; stroke-dashoffset: 1600;
+    animation: pf-draw 1.5s cubic-bezier(.3,.6,.2,1) forwards;
+  }
+  /* Area fills, then end-dots pop, then value labels fade in — after the lines/bars. */
+  .card svg[class^="plot-"] g[aria-label="area"] path { animation: pf-fade 1.1s ease .15s both; }
+  .card svg[class^="plot-"] g[aria-label="dot"] circle {
+    transform-box: fill-box; transform-origin: center;
+    animation: pf-pop .45s cubic-bezier(.2,.9,.3,1.3) both .85s;
+  }
+  .card svg[class^="plot-"] g[aria-label="text"] text { animation: pf-fade .6s ease both .95s; }
+}
+
+@keyframes pf-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes pf-draw   { to { stroke-dashoffset: 0; } }
+@keyframes pf-fade   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pf-pop    { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+
+/* ---------- Plot tooltips ---------- */
+svg[class^="plot-"] g[aria-label="tip"] text { font-family: var(--sans-serif); }
+svg[class^="plot-"] g[aria-label="tip"] { font-size: 12px; }
