@@ -137,11 +137,22 @@ svg[class^="plot-"] { --plot-background: transparent; }
 
 /* ---------- Reveal-on-scroll (progressive enhancement) ---------- */
 .reveal { opacity: 1; }                      /* no-JS: always visible */
-html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+html.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .75s ease, transform .75s cubic-bezier(.16,1,.3,1); will-change: opacity, transform; }
 html.js .reveal.in { opacity: 1; transform: none; }
-html.js .reveal.d1 { transition-delay: .06s; }
-html.js .reveal.d2 { transition-delay: .12s; }
-html.js .reveal.d3 { transition-delay: .18s; }
+html.js .reveal.d1 { transition-delay: .07s; }
+html.js .reveal.d2 { transition-delay: .14s; }
+html.js .reveal.d3 { transition-delay: .21s; }
+
+/* ---------- Hero entrance (staggered, CSS-only, completes without JS) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero > * { animation: pf-up .85s cubic-bezier(.16,1,.3,1) both; }
+  .hero > *:nth-child(1) { animation-delay: .05s; }
+  .hero > *:nth-child(2) { animation-delay: .16s; }
+  .hero > *:nth-child(3) { animation-delay: .27s; }
+  .hero > *:nth-child(4) { animation-delay: .38s; }
+  .hero > *:nth-child(5) { animation-delay: .48s; }
+}
+@keyframes pf-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -188,6 +199,42 @@ html.js .reveal.d3 { transition-delay: .18s; }
 @keyframes pf-fade   { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pf-pop    { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
 
-/* ---------- Plot tooltips ---------- */
-svg[class^="plot-"] g[aria-label="tip"] text { font-family: var(--sans-serif); }
-svg[class^="plot-"] g[aria-label="tip"] { font-size: 12px; }
+/* ---------- Custom hover layer (crosshair + tooltip) ---------- */
+.pf-hover { position: relative; }
+
+.pf-cross {
+  position: absolute; top: 0; left: 0; width: 1px; height: 0;
+  background: rgba(20, 32, 31, 0.25); pointer-events: none; opacity: 0;
+  transition: opacity .18s ease, transform .13s cubic-bezier(.22,.61,.36,1);
+}
+.pf-hover.pf-on .pf-cross { opacity: 1; }
+
+.pf-tip {
+  position: absolute; top: 0; left: 0; z-index: 6; pointer-events: none;
+  opacity: 0; transform: translate3d(0, 8px, 0);
+  transition: transform .14s cubic-bezier(.22,.61,.36,1), opacity .18s ease;
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  backdrop-filter: blur(10px) saturate(1.3);
+  border: 1px solid var(--pf-hairline); border-radius: 12px;
+  box-shadow: var(--pf-shadow-lg);
+  padding: 0.55rem 0.8rem 0.6rem; font-size: 0.8rem; line-height: 1.4;
+  min-width: 122px; max-width: 280px;
+}
+.pf-hover.pf-on .pf-tip { opacity: 1; }
+.pf-tip-h {
+  font-weight: 700; font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--pf-muted); margin-bottom: 0.3rem; white-space: nowrap;
+}
+.pf-tip-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.18rem 0; white-space: nowrap; }
+.pf-tip-key { width: 12px; height: 3px; border-radius: 2px; flex: none; }
+.pf-tip-row b { font-weight: 800; color: var(--pf-ink); font-variant-numeric: proportional-nums; }
+.pf-tip-l { color: var(--pf-muted); font-size: 0.74rem; }
+
+/* Hovered bar stays loud, the rest recede (inline opacity set by hover.js). */
+.card svg[class^="plot-"] g[aria-label="bar"] rect { transition: opacity .2s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-tip, .pf-cross { transition: opacity .15s ease; }
+  .hero > * { animation: none !important; }
+}

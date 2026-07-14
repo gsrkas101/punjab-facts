@@ -7,6 +7,7 @@ import {sourceLink} from "./components/sources.js";
 import {inr} from "./components/format.js";
 import {countUp} from "./components/metric.js";
 import {PF} from "./components/charts.js";
+import {barHover} from "./components/hover.js";
 ```
 
 ```js
@@ -18,21 +19,28 @@ const sectors = FileAttachment("./data/budget_by_sector.csv").csv({typed: true})
 ```js
 const get = (name) => overview.find((d) => d.indicator === name)?.value;
 
+// Pre-sorted so DOM bar order matches data order (hover.js relies on it).
+const sectorsSorted = sectors.slice().sort((a, b) => b.value - a.value);
+
 const sectorChart = Plot.plot({
   marginLeft: 205, marginRight: 74, height: 430,
   style: {fontSize: "13px", color: PF.ink},
   x: {label: "₹ crore →", grid: true, tickFormat: "~s", nice: true},
   y: {label: null, padding: 0.4},
   marks: [
-    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
-      tip: {format: {x: (d) => "₹" + inr(d) + " cr", y: true}}}),
-    Plot.text(sectors, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
+    Plot.barX(sectorsSorted, {x: "value", y: "indicator", fill: PF.teal, rx: 3}),
+    Plot.text(sectorsSorted, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]
 });
+
+const sectorHover = barHover(sectorChart, {
+  data: sectorsSorted,
+  valueFormat: (v) => "₹" + inr(v) + " cr"
+});
 ```
 
-<div class="hero reveal">
+<div class="hero">
   <div class="hero-eyebrow">Punjab · Public data</div>
   <h1 class="hero-title">The state of Punjab, in numbers</h1>
   <p class="hero-sub">Nonpartisan facts drawn only from official government sources — with every figure linked back to where it came from.</p>
@@ -69,7 +77,7 @@ const sectorChart = Plot.plot({
 
 <div class="card reveal">
   <div class="chart-note">Budgeted expenditure by major sector, 2026-27 (₹ crore). Education leads.</div>
-  ${sectorChart}
+  ${sectorHover}
   ${sourceLink(sources, "prs_punjab_budget_2026_27")}
 </div>
 

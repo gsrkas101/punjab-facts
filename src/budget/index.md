@@ -8,6 +8,7 @@ import {sourceLink} from "../components/sources.js";
 import {inr} from "../components/format.js";
 import {countUp} from "../components/metric.js";
 import {PF, legend} from "../components/charts.js";
+import {lineHover, barHover} from "../components/hover.js";
 ```
 
 ```js
@@ -32,11 +33,15 @@ const reChart = Plot.plot({
   color: {domain: ["Revenue receipts", "Revenue expenditure"], range: [PF.teal, PF.amber]},
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
-    Plot.lineY(reData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5,
-      tip: {format: {x: fy, y: (d) => "₹" + inr(d) + " cr", stroke: true}}}),
+    Plot.lineY(reData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5}),
     Plot.dot(reData, {x: "year", y: "value", fill: "indicator", r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(reData.filter((d) => d.year === 2026), {x: "year", y: "value", text: (d) => inr(d.value), dx: 10, textAnchor: "start", fill: PF.muted, fontSize: 12})
   ]
+});
+
+const reHover = lineHover(reChart, {
+  data: reData, xFormat: fy, yFormat: (v) => "₹" + inr(v) + " cr",
+  colors: {"Revenue receipts": PF.teal, "Revenue expenditure": PF.amber}
 });
 
 const defChart = Plot.plot({
@@ -47,11 +52,15 @@ const defChart = Plot.plot({
   color: {domain: ["Fiscal deficit", "Revenue deficit"], range: [PF.teal, PF.amber]},
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
-    Plot.lineY(defData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5,
-      tip: {format: {x: fy, y: (d) => d + "%", stroke: true}}}),
+    Plot.lineY(defData, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5}),
     Plot.dot(defData, {x: "year", y: "value", fill: "indicator", r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(defData.filter((d) => d.year === 2026), {x: "year", y: "value", text: (d) => d.value + "%", dx: 10, textAnchor: "start", fill: PF.muted, fontSize: 12})
   ]
+});
+
+const defHover = lineHover(defChart, {
+  data: defData, xFormat: fy, yFormat: (v) => v + "% of GSDP",
+  colors: {"Fiscal deficit": PF.teal, "Revenue deficit": PF.amber}
 });
 
 const gsdpChart = Plot.plot({
@@ -62,12 +71,19 @@ const gsdpChart = Plot.plot({
   marks: [
     Plot.ruleY([0], {stroke: PF.grid}),
     Plot.areaY(gsdp, {x: "year", y: "value", fill: PF.teal, fillOpacity: 0.1}),
-    Plot.lineY(gsdp, {x: "year", y: "value", stroke: PF.teal, strokeWidth: 2.5,
-      tip: {format: {x: fy, y: (d) => "₹" + inr(d) + " cr"}}}),
+    Plot.lineY(gsdp, {x: "year", y: "value", stroke: PF.teal, strokeWidth: 2.5}),
     Plot.dot(gsdp, {x: "year", y: "value", fill: PF.teal, r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(gsdp, {x: "year", y: "value", text: (d) => inr(d.value), dy: -12, fill: PF.muted, fontSize: 12})
   ]
 });
+
+const gsdpHover = lineHover(gsdpChart, {
+  data: gsdp, xFormat: fy, yFormat: (v) => "₹" + inr(v) + " cr",
+  colors: {"GSDP (current prices)": PF.teal}
+});
+
+// Pre-sorted so DOM bar order matches data order (hover.js relies on it).
+const sectorsSorted = sectors.slice().sort((a, b) => b.value - a.value);
 
 const sectorChart = Plot.plot({
   marginLeft: 205, marginRight: 74, height: 430,
@@ -75,11 +91,15 @@ const sectorChart = Plot.plot({
   x: {label: "₹ crore →", grid: true, tickFormat: "~s", nice: true},
   y: {label: null, padding: 0.4},
   marks: [
-    Plot.barX(sectors, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
-      tip: {format: {x: (d) => "₹" + inr(d) + " cr", y: true}}}),
-    Plot.text(sectors, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
+    Plot.barX(sectorsSorted, {x: "value", y: "indicator", fill: PF.teal, rx: 3}),
+    Plot.text(sectorsSorted, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]
+});
+
+const sectorHover = barHover(sectorChart, {
+  data: sectorsSorted,
+  valueFormat: (v) => "₹" + inr(v) + " cr"
 });
 ```
 
@@ -108,7 +128,7 @@ between these two lines is the **revenue deficit**, met by borrowing.
 
 <div class="card reveal">
   ${legend([{label: "Revenue receipts", color: PF.teal}, {label: "Revenue expenditure", color: PF.amber}])}
-  ${reChart}
+  ${reHover}
   ${sourceLink(sources, "prs_punjab_budget_2026_27")}
 </div>
 
@@ -118,7 +138,7 @@ As a share of the economy (GSDP), both deficits are edging **down** from their 2
 
 <div class="card reveal">
   ${legend([{label: "Fiscal deficit", color: PF.teal}, {label: "Revenue deficit", color: PF.amber}])}
-  ${defChart}
+  ${defHover}
   ${sourceLink(sources, "prs_punjab_budget_2026_27")}
 </div>
 
@@ -130,7 +150,7 @@ As a share of the economy (GSDP), both deficits are edging **down** from their 2
 
 <div class="card reveal">
   <div class="chart-note">Gross State Domestic Product, current prices (₹ crore).</div>
-  ${gsdpChart}
+  ${gsdpHover}
   ${sourceLink(sources, "prs_punjab_budget_2026_27")}
 </div>
 
@@ -138,7 +158,7 @@ As a share of the economy (GSDP), both deficits are edging **down** from their 2
 
 <div class="card reveal">
   <div class="chart-note">Budgeted expenditure by major sector, 2026-27 (₹ crore).</div>
-  ${sectorChart}
+  ${sectorHover}
   ${sourceLink(sources, "prs_punjab_budget_2026_27")}
 </div>
 

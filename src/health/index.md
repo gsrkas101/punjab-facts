@@ -7,6 +7,7 @@ Surveys — **NFHS-4 (2015-16)** and **NFHS-5 (2019-21)**. The picture is mixed.
 import {sourceLink} from "../components/sources.js";
 import {countUp} from "../components/metric.js";
 import {PF, legend} from "../components/charts.js";
+import {lineHover} from "../components/hover.js";
 ```
 
 ```js
@@ -37,12 +38,17 @@ const slope = Plot.plot({
   y: {label: "% of the relevant group", grid: true, nice: true, zero: true},
   color: {domain, range},
   marks: [
-    Plot.line(pct, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5,
-      tip: {format: {x: (d) => nfhsShort(d), y: (d) => d + "%", stroke: true}}}),
+    Plot.line(pct, {x: "year", y: "value", stroke: "indicator", strokeWidth: 2.5}),
     Plot.dot(pct, {x: "year", y: "value", fill: "indicator", r: 4.5, stroke: "white", strokeWidth: 2}),
     Plot.text(pct.filter((d) => d.year === 2020), {x: "year", y: "value",
       text: (d) => short[d.indicator] + " · " + d.value + "%", dx: 10, textAnchor: "start", fill: PF.muted, fontSize: 11.5})
   ]
+});
+
+const slopeHover = lineHover(slope, {
+  data: pct, xFormat: nfhsShort, yFormat: (v) => v + "%",
+  seriesLabel: (s) => short[s] ?? s,
+  colors: Object.fromEntries(domain.map((d, i) => [d, range[i]]))
 });
 ```
 
@@ -77,7 +83,7 @@ Between the two surveys, **institutional births** rose and **wasting** fell — 
 <div class="card reveal">
   ${legend([{label: "Institutional births", color: PF.teal}, {label: "Child anaemia", color: PF.red}, {label: "Stunted", color: PF.amber}, {label: "Wasted", color: PF.blue}])}
   <div class="chart-note">NFHS-4 (2015-16) → NFHS-5 (2019-21). Higher is better for institutional births; lower is better for anaemia, stunting and wasting.</div>
-  ${slope}
+  ${slopeHover}
   ${sourceLink(sources, "nfhs5_punjab")}
 </div>
 

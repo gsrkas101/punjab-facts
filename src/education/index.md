@@ -7,6 +7,7 @@ import {sourceLink} from "../components/sources.js";
 import {inr} from "../components/format.js";
 import {countUp} from "../components/metric.js";
 import {PF} from "../components/charts.js";
+import {barHover} from "../components/hover.js";
 ```
 
 ```js
@@ -20,17 +21,23 @@ const enrolment = FileAttachment("../data/education_enrolment.csv").csv({typed: 
 const lit = (name) => literacy.find((d) => d.indicator === name)?.value;
 const pct2 = (x) => x.toFixed(2);
 
+// Pre-sorted so DOM bar order matches data order (hover.js relies on it).
+const schoolsSorted = schools.slice().sort((a, b) => b.value - a.value);
+const enrolmentSorted = enrolment.slice().sort((a, b) => b.value - a.value);
+
 const schoolsChart = Plot.plot({
   marginLeft: 150, marginRight: 96, height: 210,
   style: {fontSize: "13px", color: PF.ink},
   x: {label: "Schools →", grid: true, tickFormat: "~s", nice: true},
   y: {label: null, padding: 0.42},
   marks: [
-    Plot.barX(schools, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
-      tip: {format: {x: (d) => inr(d) + " schools", y: true}}}),
-    Plot.text(schools, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
+    Plot.barX(schoolsSorted, {x: "value", y: "indicator", fill: PF.teal, rx: 3}),
+    Plot.text(schoolsSorted, {x: "value", y: "indicator", text: (d) => inr(d.value), dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]
+});
+const schoolsHover = barHover(schoolsChart, {
+  data: schoolsSorted, valueFormat: (v) => inr(v) + " schools"
 });
 
 const enrolmentChart = Plot.plot({
@@ -39,11 +46,13 @@ const enrolmentChart = Plot.plot({
   x: {label: "Students (lakh) →", grid: true, nice: true},
   y: {label: null, padding: 0.45},
   marks: [
-    Plot.barX(enrolment, {x: "value", y: "indicator", sort: {y: "-x"}, fill: PF.teal, rx: 3,
-      tip: {format: {x: (d) => d.toFixed(2) + " lakh", y: true}}}),
-    Plot.text(enrolment, {x: "value", y: "indicator", text: (d) => d.value.toFixed(2) + " L", dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
+    Plot.barX(enrolmentSorted, {x: "value", y: "indicator", fill: PF.teal, rx: 3}),
+    Plot.text(enrolmentSorted, {x: "value", y: "indicator", text: (d) => d.value.toFixed(2) + " L", dx: 7, textAnchor: "start", fill: PF.muted, fontSize: 12}),
     Plot.ruleX([0], {stroke: PF.grid})
   ]
+});
+const enrolmentHover = barHover(enrolmentChart, {
+  data: enrolmentSorted, valueFormat: (v) => v.toFixed(2) + " lakh students"
 });
 ```
 
@@ -70,7 +79,7 @@ const enrolmentChart = Plot.plot({
 Government schools are ~70% of Punjab's recognised schools (UDISE+ 2024-25).
 
 <div class="card reveal">
-  ${schoolsChart}
+  ${schoolsHover}
   ${sourceLink(sources, "udise_plus")}
 </div>
 
@@ -79,7 +88,7 @@ Government schools are ~70% of Punjab's recognised schools (UDISE+ 2024-25).
 Private-unaided schools now enrol **more** students than government schools, despite being far fewer in number.
 
 <div class="card reveal">
-  ${enrolmentChart}
+  ${enrolmentHover}
   ${sourceLink(sources, "udise_plus")}
 </div>
 
