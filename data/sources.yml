@@ -1,0 +1,60 @@
+# Provenance registry for Punjab Facts.
+# Every processed dataset references a source_id defined here, so every chart on
+# the site can render a "Source" link automatically. Keep this the single source
+# of truth for attribution and licensing.
+sources:
+  prs_punjab_budget_2026_27:
+    source_name: "Punjab Budget Analysis 2026-27 — PRS Legislative Research"
+    publisher: "PRS Legislative Research"
+    url: "https://prsindia.org/budgets/states/punjab-budget-analysis-2026-27"
+    license: "PRS content — attribution required"
+    retrieved_date: "2026-07-14"
+
+  open_budgets_india_punjab:
+    source_name: "Punjab budget datasets — Open Budgets India"
+    publisher: "Open Budgets India (CBGA)"
+    url: "https://openbudgetsindia.org/dataset"
+    license: "CC-BY 4.0"
+    retrieved_date: "2026-07-14"
+
+  rbi_handbook_states:
+    source_name: "Handbook of Statistics on Indian States — Reserve Bank of India"
+    publisher: "Reserve Bank of India"
+    url: "https://www.rbi.org.in/Scripts/AnnualPublications.aspx?head=Handbook+of+Statistics+on+Indian+States"
+    license: "RBI terms — attribution required"
+    retrieved_date: "2026-07-14"
+
+  data_gov_in_punjab:
+    source_name: "Open Government Data Portal of Punjab"
+    publisher: "National Informatics Centre (NIC), Government of India"
+    url: "https://punjab.data.gov.in/"
+    license: "Government Open Data License – India (GODL)"
+    retrieved_date: "2026-07-14"
+
+  census_2011:
+    source_name: "Census of India 2011"
+    publisher: "Office of the Registrar General & Census Commissioner, India"
+    url: "https://censusindia.gov.in/"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-14"
+
+  udise_plus:
+    source_name: "UDISE+ (Unified District Information System for Education Plus)"
+    publisher: "Ministry of Education, Government of India"
+    url: "https://udiseplus.gov.in/"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-14"
+
+  nfhs5_punjab:
+    source_name: "National Family Health Survey (NFHS-5) — Punjab factsheet"
+    publisher: "Ministry of Health & Family Welfare, Government of India"
+    url: "https://rchiips.org/nfhs/factsheet_NFHS-5.shtml"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-14"
+
+  niti_sdg_index:
+    source_name: "SDG India Index — NITI Aayog"
+    publisher: "NITI Aayog, Government of India"
+    url: "https://sdgindiaindex.niti.gov.in/"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-14"

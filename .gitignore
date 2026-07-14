@@ -1,0 +1,20 @@
+# Node / Observable Framework
+node_modules/
+dist/
+.observablehq/cache/
+src/.observablehq/cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Raw source downloads are a rebuildable cache, not committed.
+# Canonical, cleaned data lives in data/processed/ and IS committed.
+data/raw/
+
+# OS
+.DS_Store
+Thumbs.db
