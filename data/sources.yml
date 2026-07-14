@@ -58,3 +58,31 @@ sources:
     url: "https://sdgindiaindex.niti.gov.in/"
     license: "Government of India — attribution required"
     retrieved_date: "2026-07-14"
+
+  cgwb_dynamic_2023:
+    source_name: "Dynamic Ground Water Resources of India, 2023 — Central Ground Water Board"
+    publisher: "Ministry of Jal Shakti, Government of India"
+    url: "https://www.jalshakti-dowr.gov.in/static/uploads/2024/05/20231206209724415.pdf"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-15"
+
+  fci_wheat_rms_2024_25:
+    source_name: "Wheat procurement, Rabi Marketing Season 2024-25 — Food Corporation of India / PIB"
+    publisher: "Ministry of Consumer Affairs, Food & Public Distribution, Government of India"
+    url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2030483"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-15"
+
+  punjab_economic_survey_2023_24:
+    source_name: "Punjab Economic Survey 2023-24"
+    publisher: "Economic & Statistical Organisation, Government of Punjab"
+    url: "https://static.investindia.gov.in/s3fs-public/2024-04/Punjab%20Economic%20Survey%202023-24.pdf"
+    license: "Government of Punjab — attribution required"
+    retrieved_date: "2026-07-15"
+
+  agri_census_2015_16:
+    source_name: "Agriculture Census 2015-16 — operational holdings"
+    publisher: "Department of Agriculture & Farmers Welfare, Government of India"
+    url: "https://agcensus.da.gov.in/"
+    license: "Government of India — attribution required"
+    retrieved_date: "2026-07-15"

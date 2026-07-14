@@ -1,0 +1,6 @@
+indicator,geography,year,value,unit,source_id
+Agriculture & allied share of GSVA,Punjab,2023,27.0,% of GSVA,punjab_economic_survey_2023_24
+Average operational holding,Punjab,2015,3.62,hectares,agri_census_2015_16
+Stage of groundwater extraction,Punjab,2023,163.76,%,cgwb_dynamic_2023
+Over-exploited blocks,Punjab,2023,117.0,of 153 blocks,cgwb_dynamic_2023
+Punjab share of wheat procurement,Punjab,2024,46.7,% of national,fci_wheat_rms_2024_25

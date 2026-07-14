@@ -1,0 +1,4 @@
+indicator,geography,year,value,unit,source_id
+Annual recharge,Punjab,2023,18.84,bcm,cgwb_dynamic_2023
+Extractable resource,Punjab,2023,16.98,bcm,cgwb_dynamic_2023
+Actual extraction,Punjab,2023,27.8,bcm,cgwb_dynamic_2023

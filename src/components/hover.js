@@ -135,8 +135,9 @@ export function lineHover(chart, {
  */
 export function barHover(chart, {
   data, label = (d) => d.indicator, value = (d) => d.value,
-  valueFormat = String, color = "var(--pf-teal)"
+  valueFormat = String, color = "var(--pf-teal)"   // string, or (d) => string
 } = {}) {
+  const colorOf = typeof color === "function" ? color : () => color;
   const wrap = html`<div class="pf-hover"></div>`;
   wrap.append(chart);
   const tip = makeTip();
@@ -152,7 +153,7 @@ export function barHover(chart, {
       rects.forEach((o, j) => { o.style.opacity = j === i ? "1" : "0.35"; });
       tip.replaceChildren(
         tipHeader(label(d)),
-        tipRow(color, valueFormat(value(d)))
+        tipRow(colorOf(d), valueFormat(value(d)))
       );
       wrap.classList.add("pf-on");
     });

@@ -34,6 +34,10 @@ export default {
       pages: [{ name: "Overview", path: "/budget/" }]
     },
     {
+      name: "Agriculture",
+      pages: [{ name: "Overview", path: "/agriculture/" }]
+    },
+    {
       name: "Education",
       pages: [{ name: "Overview", path: "/education/" }]
     },

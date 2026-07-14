@@ -88,15 +88,17 @@ const sectorHover = barHover(sectorChart, {
     <div class="ic-title">Budget & Finances →</div>
     <div class="ic-desc">Where the money comes from, where it goes, and how the deficit is trending.</div>
   </a>
-  <a class="inside-card reveal d1" href="./education/">
-    <div class="ic-soon">In progress</div>
-    <div class="ic-title">Education →</div>
-    <div class="ic-desc">Schools, enrolment, teachers and literacy.</div>
+  <a class="inside-card reveal d1" href="./agriculture/">
+    <div class="ic-title">Agriculture →</div>
+    <div class="ic-desc">Nearly half of India's wheat pool — and the groundwater bill underneath it.</div>
   </a>
-  <a class="inside-card reveal d2" href="./health/">
-    <div class="ic-soon">In progress</div>
+  <a class="inside-card reveal d2" href="./education/">
+    <div class="ic-title">Education →</div>
+    <div class="ic-desc">Literacy, schools, and the shift toward private enrolment.</div>
+  </a>
+  <a class="inside-card reveal d3" href="./health/">
     <div class="ic-title">Health →</div>
-    <div class="ic-desc">Outcomes, immunisation and facilities.</div>
+    <div class="ic-desc">What improved between NFHS-4 and NFHS-5 — and what didn't.</div>
   </a>
   <a class="inside-card reveal d3" href="./about">
     <div class="ic-title">About & Sources →</div>
