@@ -1,4 +1,8 @@
+<img src="assets/logo.svg" alt="Punjab Facts — five rivers mark" width="56" align="left">
+
 # Punjab Facts
+
+*Five rivers, drawn as data — Punjab (panj-āb) means "land of five rivers".*
 
 A nonpartisan, government-data-only website about the **state of Punjab, India** —
 modelled on [USAFacts](https://usafacts.org/). Every figure links back to its official
